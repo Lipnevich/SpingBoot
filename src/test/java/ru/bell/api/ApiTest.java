@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import org.junit.Before;
 import ru.bell.Application;
 import org.junit.Test;
 
@@ -36,50 +37,39 @@ public class ApiTest {
 	@Autowired
 	private UserApi api;
 
-	@Test
-	public void shouldReturnDefaultMessage() throws Exception {
-		this.mockMvc.perform(get("/")).andDo(print()).andExpect(status().isOk())
-				.andExpect(content().string(containsString("Hello world!")));
+	private ObjectWriter jsonWriter;
+
+	@Before
+	public void before() {
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
+		jsonWriter = mapper.writer().withDefaultPrettyPrinter();
 	}
 
 	@Test
 	public void validationUserRequest() throws Exception {
-		this.mockMvc.perform(post("/create").contentType(MediaType.APPLICATION_JSON_UTF8)
+		this.mockMvc.perform(post("/user/create").contentType(MediaType.APPLICATION_JSON_UTF8)
 						.content(userJson(null))).andDo(print()).andExpect(status().isBadRequest());
 	}
 
 	@Test
-	public void creationOfUser() throws Exception {
-		String name = "Name";
-
-		this.mockMvc.perform(post("/create").contentType(MediaType.APPLICATION_JSON_UTF8)
-				.content(userJson(name))).andDo(print()).andExpect(status().isOk())
-				.andExpect(content().string(containsString("User created")));
-
-		this.mockMvc.perform(get("/list")).andDo(print()).andExpect(status().isOk())
-				.andExpect(content().string(containsString(name)));
-	}
-
-	@Test
 	public void userCreation() throws Exception {
-		String name = userJson("");
+		String name = "UniqueNameForUserCreationTest";
 
-		this.mockMvc.perform(post("/update").contentType(MediaType.APPLICATION_JSON_UTF8)
-						.content(userJson(name))).andDo(print()).andExpect(status().isOk())
-				.andExpect(content().string(containsString("User created")));
+		this.mockMvc.perform(post("/user/create").contentType(MediaType.APPLICATION_JSON_UTF8)
+				.content(userJson(name))).andDo(print()).andExpect(status().isOk())
+				.andExpect(content().string(containsString(name)));
 
-		this.mockMvc.perform(get("/list")).andDo(print()).andExpect(status().isOk())
+		this.mockMvc.perform(post("/user/search").contentType(MediaType.APPLICATION_JSON_UTF8)
+						.content(searchJson(name))).andDo(print()).andExpect(status().isOk())
 				.andExpect(content().string(containsString(name)));
 	}
 
+	private String userJson(String name) throws JsonProcessingException {
+		return jsonWriter.writeValueAsString(DataGenerator.userRequest(name));
+	}
 
-	private String userJson(String name) throws JsonProcessingException, ParseException {
-		User userRequest = DataGenerator.userRequest(name);
-
-		ObjectMapper mapper = new ObjectMapper();
-		mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
-		ObjectWriter ow = mapper.writer().withDefaultPrettyPrinter();
-		String requestJson = ow.writeValueAsString(userRequest);
-		return requestJson;
+	private String searchJson(String name) throws JsonProcessingException {
+		return jsonWriter.writeValueAsString(new UserSearch().setName(name));
 	}
 }

@@ -8,7 +8,7 @@ import ru.bell.dao.EmailDAO;
 import ru.bell.dao.PhoneDAO;
 import ru.bell.dao.UserDAO;
 import ru.bell.dao.UserEntity;
-import ru.bell.task.BalanceIncreasing;
+import ru.bell.task.BalancesIncreasing;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,7 +23,7 @@ import java.util.stream.StreamSupport;
 @Service
 public class UserService {
 
-    static final Logger LOGGER = Logger.getLogger(BalanceIncreasing.class.getName());
+    static final Logger LOGGER = Logger.getLogger(BalancesIncreasing.class.getName());
 
     @Autowired
     private UserDAO userDAO;
@@ -90,7 +90,4 @@ public class UserService {
         return page;
     }
 
-    public User get(Long id) {
-        return UserConverter.from(userDAO.findById(id).get());
-    }
 }

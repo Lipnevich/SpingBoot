@@ -1,5 +1,8 @@
 package ru.bell.api;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PastOrPresent;
@@ -9,6 +12,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id", scope = User.class)
 public class User {
 
     private Long id;
@@ -93,5 +97,17 @@ public class User {
     public User setId(Long id) {
         this.id = id;
         return this;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", birthday=" + birthday +
+                ", emails=" + emails +
+                ", phones=" + phones +
+                ", balance=" + balance +
+                '}';
     }
 }

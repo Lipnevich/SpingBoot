@@ -11,9 +11,9 @@ import java.math.BigDecimal;
 import java.util.logging.Logger;
 
 @Service
-public class BalanceIncreasing {
-  
-    static final Logger LOGGER = Logger.getLogger(BalanceIncreasing.class.getName());
+public class BalancesIncreasing {
+
+    static final Logger LOGGER = Logger.getLogger(BalancesIncreasing.class.getName());
 
     @Autowired
     private AccountDAO accountDAO;
