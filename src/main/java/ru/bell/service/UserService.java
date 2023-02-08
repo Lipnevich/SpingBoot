@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.PriorityQueue;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -61,6 +62,7 @@ public class UserService {
 
         List<UserEntity> users = new ArrayList<>();
         if (search.getName() != null) {
+
             page.setTotal(userDAO.countUsersWithNameLike(search.getName()));
             if (page.getTotal() > 0) {
                 users = userDAO.findUsersWithNameLike(search.getName(), page.getPage(), page.getSize());
@@ -71,11 +73,11 @@ public class UserService {
                 users = userDAO.findUsersWithBirthdayFrom(search.getBirthday(), page.getPage(), page.getSize());
             }
         } else if (search.getEmail() != null) {
-            UserEntity entity = userDAO.findByEmail(search.getEmail());
-            if (entity != null) {
-                page.setTotal(1);
-                users.add(entity);
-            }
+//            UserEntity entity = userDAO.findByEmail(search.getEmail());
+//            if (entity != null) {
+//                page.setTotal(1);
+//                users.add(entity);
+//            }
         } else if (search.getPhone() != null) {
             UserEntity entity = userDAO.findByPhone(search.getPhone());
             if (entity != null) {

@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
@@ -11,9 +13,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserDAO extends CrudRepository<UserEntity, Long> {
 
-    @Query(value="from UserEntity u INNER JOIN u.emails e WHERE e.email = :email")
     @Cacheable("users")
-    UserEntity findByEmail(String email);
+    Page<UserEntity> findByNameStartsWith(String name, Pageable pageable);
 
     @Query(value="from UserEntity u INNER JOIN u.phones p WHERE p.phone = :phone")
     @Cacheable("users")

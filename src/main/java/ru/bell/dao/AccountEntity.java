@@ -21,8 +21,6 @@ public class AccountEntity {
     private Long id;
 
     @OneToOne
-    @MapsId
-    @JoinColumn(name = "USER_ID")
     private UserEntity user;
 
     @Column(name = "BALANCE", nullable = false)

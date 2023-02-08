@@ -12,8 +12,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.Enumeration;
+import java.util.List;
 import java.util.stream.IntStream;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -105,5 +108,24 @@ public class ServiceTest {
 		} catch (ParseException e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	@Test
+	public void test() {
+		int num [] = new int [] {9,9,9,9,9,9,9,9,9,9};
+		int k = 34;
+		long sum = 0;
+
+		for (int i = 0; i < num.length; ++i) {
+			sum += num[num.length - i - 1] * Math.pow(10, i);
+		}
+		sum += k;
+		List<Integer> result = new ArrayList<>();
+		do {
+			result.add(0, (int)sum % 10);
+			sum /= 10;
+		} while (sum > 0);
+
+		System.out.println(result);
 	}
 }

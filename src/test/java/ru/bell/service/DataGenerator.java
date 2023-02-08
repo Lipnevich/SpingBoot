@@ -16,9 +16,11 @@ public class DataGenerator {
                 .setPassword("password")
                 .setBirthday(new Date(System.currentTimeMillis() - 1_000_000))
                 .setBalance(BigDecimal.TEN)
-                .setEmails(Stream.of("email" + uniqueIndex() + "@email.ru"
+                .setEmails(Stream.of(name + uniqueIndex() + "@email.ru"
+                        , name + uniqueIndex() + "@email.ru"
                 ).collect(Collectors.toList()))
                 .setPhones(Stream.of("7920" + uniqueIndex()
+                        , "7920" + uniqueIndex()
                 ).collect(Collectors.toList()));
     }
 

@@ -20,8 +20,6 @@ public class EmailEntity {
     private Long id;
 
     @ManyToOne
-    @MapsId
-    @JoinColumn(name = "USER_ID")
     private UserEntity user;
 
 

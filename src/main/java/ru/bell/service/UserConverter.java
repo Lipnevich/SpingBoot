@@ -32,8 +32,8 @@ public class UserConverter {
                         .setBalance(request.getBalance()).setUser(user))
                 .setPassword(request.getPassword())
                 .setEmails(request.getEmails().stream().map(email -> new EmailEntity().setEmail(email).setUser(user))
-                        .collect(Collectors.toList()))
+                        .collect(Collectors.toSet()))
                 .setPhones(request.getPhones().stream().map(phone -> new PhoneEntity().setPhone(phone).setUser(user))
-                        .collect(Collectors.toList()));
+                        .collect(Collectors.toSet()));
     }
 }

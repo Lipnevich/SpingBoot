@@ -19,8 +19,6 @@ public class PhoneEntity {
     private Long id;
 
     @ManyToOne
-    @MapsId
-    @JoinColumn(name = "USER_ID")
     private UserEntity user;
 
     @Column(unique = true, name = "PHONE", length = 13, nullable = false)

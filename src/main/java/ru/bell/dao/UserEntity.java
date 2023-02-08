@@ -6,10 +6,12 @@ import org.hibernate.annotations.LazyCollectionOption;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -30,18 +32,17 @@ public class UserEntity {
     private Long id;
 
     @OneToOne(mappedBy = "user", optional = false, cascade = CascadeType.ALL)
-    @PrimaryKeyJoinColumn
     private AccountEntity account;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Size(min = 1)
-    @LazyCollection(LazyCollectionOption.FALSE)
-    private List<PhoneEntity> phones;
+//    @LazyCollection(LazyCollectionOption.FALSE)
+    private Set<PhoneEntity> phones;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Size(min = 1)
-    @LazyCollection(LazyCollectionOption.FALSE)
-    private List<EmailEntity> emails;
+//    @LazyCollection(LazyCollectionOption.FALSE)
+    private Set<EmailEntity> emails;
 
 
     @Column(name = "NAME", length = 500, nullable = false)
@@ -89,20 +90,20 @@ public class UserEntity {
         return this;
     }
 
-    public List<EmailEntity> getEmails() {
+    public Set<EmailEntity> getEmails() {
         return emails;
     }
 
-    public UserEntity setEmails(List<EmailEntity> emailData) {
+    public UserEntity setEmails(Set<EmailEntity> emailData) {
         this.emails = emailData;
         return this;
     }
 
-    public List<PhoneEntity> getPhones() {
+    public Set<PhoneEntity> getPhones() {
         return phones;
     }
 
-    public UserEntity setPhones(List<PhoneEntity> phoneData) {
+    public UserEntity setPhones(Set<PhoneEntity> phoneData) {
         this.phones = phoneData;
         return this;
     }

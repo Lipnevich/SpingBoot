@@ -1,5 +1,8 @@
 package ru.bell.task;
 
+import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import ru.bell.dao.AccountDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
@@ -10,7 +13,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.util.logging.Logger;
 
-@Service
+@Configuration
+@EnableAsync
+@EnableScheduling
 public class BalancesIncreasing {
 
     static final Logger LOGGER = Logger.getLogger(BalancesIncreasing.class.getName());
